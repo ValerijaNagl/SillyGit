@@ -1,0 +1,44 @@
+package servent.message.util;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+import app.AppConfig;
+import servent.message.Message;
+import servent.message.MessageType;
+
+public class DelayedMessageSender implements Runnable {
+
+	private Message messageToSend;
+	
+	public DelayedMessageSender(Message messageToSend) {
+		this.messageToSend = messageToSend;
+	}
+	
+	public void run() {
+		
+		try {
+			Thread.sleep((long)(Math.random() * 1000) + 500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		
+		if (MessageUtil.MESSAGE_UTIL_PRINTING && messageToSend.getMessageType() != MessageType.HANDLE_LOCK) {
+			AppConfig.timestampedStandardPrint("Sending message " + messageToSend);
+		}
+		
+		try {
+			Socket sendSocket = new Socket(messageToSend.getReceiverIp(), messageToSend.getReceiverPort());
+			
+			ObjectOutputStream oos = new ObjectOutputStream(sendSocket.getOutputStream());
+			oos.writeObject(messageToSend);
+			oos.flush();
+			
+			sendSocket.close();
+		} catch (IOException e) {
+			AppConfig.timestampedErrorPrint("Couldn't send message: " + messageToSend.toString());
+		}
+	}
+	
+}

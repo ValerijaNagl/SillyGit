@@ -1,0 +1,3 @@
+14:47:38 - Starting servent [112|localhost|1802]
+14:47:39 - Pausing for 50000 ms
+14:47:39 - Sending message [112|1802|0||NEW_NODE|1611|44]

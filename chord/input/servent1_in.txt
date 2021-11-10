@@ -1,0 +1,3 @@
+pause 20000
+pull nikola
+pause 20000
