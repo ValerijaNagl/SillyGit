@@ -1,2 +1,3 @@
-# KeywordCounter
-Concurrent Java application which counts keywords in given web pages and locally scanned text corpuses from the file system. 
+# SillyGit
+Distributed system written in Java that imitates Git - distributed version control, but working only with files.
+
